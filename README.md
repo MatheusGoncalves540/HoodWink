@@ -3,6 +3,7 @@ Hoodwink, python console card game
 
 HOODWINK
 Habilidades das cartas
+
 ASSASSINO: Por 4 serpentes de prata, mate uma carta de outro jogador.
 
 COVEIRO: Por 6 serpentes de prata, ressuscite uma carta nova aleatória para sua mão.
