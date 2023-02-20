@@ -19,15 +19,16 @@ id_card = { # ID da carta : ['Nome da carta', Preço, ação extra 1, ação ext
     5 : ['Duque', 2, 4,],
     6 : ['Condessa', 0],
     #ação extra 1 = valor recebido ao aumentar os preços
-    7 : ['Governador', 0, 1],
+    7 : ['Marquês', 0, 1],
     #ação extra 1 = valor retirado do inimigo
     8 : ['Traira', 0, 2],
     #ação extra 1 = valor reduzido dos preços
     9 : ['Rebelde', 2, 1],
 }
+
 Total_Cards = len(id_card) -  2
 silver_initial = 8
-probability = [0,0,0,0, 1]
+probability = [0,0,0,0,1]
 
 def VerifyDupCards():
     if player1.CardsInHand[1] == player1.CardsInHand[0]:
@@ -40,12 +41,12 @@ def VerifyDupCards():
 class player:
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
-        self.SiverSerpents = silver_initial
+        self.SilverSerpents = silver_initial
 
 class IA():
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
-        self.SiverSerpents = silver_initial
+        self.SilverSerpents = silver_initial
 
     def IAdecision(self):
         if random.choice(probability) == 1:
@@ -75,8 +76,8 @@ def player1_round():
     if translated_ids[0][0] != '' and translated_ids[1][0] != '': TranslatedHand = f'{translated_ids[0][0]} e {translated_ids[1][0]}'
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
     else: TranslatedHand = translated_ids[0][0]
-    print(f'''Você tem em mãos: {TranslatedHand}. E Você tem {player1.SiverSerpents} Serpente(s) de Prata
-Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
+    print(f'''Você tem em mãos: {TranslatedHand}. E Você tem {player1.SilverSerpents} Serpente(s) de Prata
+Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
 
     O turno é seu! (digite o comando que está entre parenteses, para realizar a ação): 
     Pegar 1 serpentes de prata - (1)
@@ -92,7 +93,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
 
     Traíra, diz:"Um virar de costas merece uma faca" - (6)              | Preço: {id_card[8][1]}
 
-    Governador, diz: "É preciso aumentar as taxas" - (7)                | Preço: {id_card[7][1]}
+    Marquês, diz: "É preciso aumentar as taxas" - (7)                | Preço: {id_card[7][1]}
 
     Bufão, diz: "Que tal um truque de mágica?" - (8)                    | Preço: {id_card[4][1]}
 
@@ -107,8 +108,8 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
     
     if actionPlayer1 == '1':
         os.system('cls')
-        player1.SiverSerpents += 1
-        input(f'Você pegou 1 serpente de prata. Agora você tem {player1.SiverSerpents} delas!')
+        player1.SilverSerpents += 1
+        input(f'Você pegou 1 serpente de prata. Agora você tem {player1.SilverSerpents} delas!')
         EnemyTurn()
     elif actionPlayer1 == '2':
         if IAplayer.IAdecision() or 'countess' in Ia_use_this:
@@ -191,18 +192,18 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                 InvalidEntry()
         else:
             os.system('cls')
-            player1.SiverSerpents += 2
+            player1.SilverSerpents += 2
             notContestedbyIA()
-            input(f'Você pegou 2 serpente de prata. Agora você tem {player1.SiverSerpents} delas!')
+            input(f'Você pegou 2 serpente de prata. Agora você tem {player1.SilverSerpents} delas!')
             EnemyTurn() 
     elif actionPlayer1 == '3':
-        if player1.SiverSerpents >= id_card[-2][1]:
+        if player1.SilverSerpents >= id_card[-2][1]:
             witchCardKill = input('Qual carta inimiga gostaria de matar? Esquerda (0), Direita (1)\nSua ação: ')
             if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
-                player1.SiverSerpents -= 8
-                if IAplayer.SiverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
+                player1.SilverSerpents -= 8
+                if IAplayer.SilverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
                     if 'paladin' not in Ia_use_this: Ia_use_this.append('paladin'), probabilityReset()
-                    IAplayer.SiverSerpents -= id_card[1][1]
+                    IAplayer.SilverSerpents -= id_card[1][1]
                     contested = input(f'O adversário usou a paladina por {id_card[1][1]} serpentes de prata, gostaria de contestar? sim (1), não (0)\n Sua ação: ')
                     if contested == '1':
                         if 1 in IAplayer.CardsInHand:
@@ -274,10 +275,10 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                     else:
                         WinGame()
             elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
-                player1.SiverSerpents -= 8
-                if IAplayer.SiverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
+                player1.SilverSerpents -= 8
+                if IAplayer.SilverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
                     if 'paladin' not in Ia_use_this: Ia_use_this.append('paladin'), probabilityReset()
-                    IAplayer.SiverSerpents -= id_card[1][1]
+                    IAplayer.SilverSerpents -= id_card[1][1]
                     contested = input(f'O adversário usou a paladina por {id_card[1][1]} serpentes de prata, gostaria de contestar? sim (1), não (0)\n Sua ação: ')
                     if contested == '1':
                         if 1 in IAplayer.CardsInHand:
@@ -349,13 +350,13 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
         else:
             NotEnoughtMoney()
     elif actionPlayer1 == '4':
-        if player1.SiverSerpents >= id_card[2][1]:
+        if player1.SilverSerpents >= id_card[2][1]:
             witchCardKill = input('Qual carta inimiga gostaria de colocar na lista do assassino? Esquerda (0), Direita (1)\n Sua ação: ')
             if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
-                player1.SiverSerpents -= id_card[2][1]
-                if IAplayer.SiverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
+                player1.SilverSerpents -= id_card[2][1]
+                if IAplayer.SilverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
                     if 'paladin' not in Ia_use_this: Ia_use_this.append('paladin'), probabilityReset()
-                    IAplayer.SiverSerpents -= id_card[1][1]
+                    IAplayer.SilverSerpents -= id_card[1][1]
                     contested = input(f'O adversário usou a paladina por {id_card[1][1]} serpentes de prata, gostaria de contestar? sim (1), não (0)\n Sua ação: ')
                     if contested == '1':
                         if 1 in IAplayer.CardsInHand:
@@ -483,10 +484,10 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                         else:
                             WinGame()
             elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
-                player1.SiverSerpents -= id_card[2][1]
-                if IAplayer.SiverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
+                player1.SilverSerpents -= id_card[2][1]
+                if IAplayer.SilverSerpents >= id_card[1][1] and IAplayer.IAdecision() or 'paladin' in Ia_use_this:
                     if 'paladin' not in Ia_use_this: Ia_use_this.append('paladin'), probabilityReset()
-                    IAplayer.SiverSerpents -= id_card[1][1]
+                    IAplayer.SilverSerpents -= id_card[1][1]
                     contested = input(f'O adversário usou a paladina por {id_card[1][1]} serpentes de prata, gostaria de contestar? sim (1), não (0)\n Sua ação: ')
                     if contested == '1':
                         if 1 in IAplayer.CardsInHand:
@@ -619,7 +620,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
         else:
             NotEnoughtMoney()
     elif actionPlayer1 == '5':
-        if player1.SiverSerpents >= id_card[3][1]:
+        if player1.SilverSerpents >= id_card[3][1]:
             if len(player1.CardsInHand) - player1.CardsInHand.count(-1) < 2:
                 if IAplayer.IAdecision() or 'dispute' in Ia_use_this:
                     if 'dispute' not in Ia_use_this: Ia_use_this.append('dispute'), probabilityReset()
@@ -631,7 +632,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                             if CardInHand != 0:
                                 os.system('cls')
                                 print('Você eliminou a carta da esquerda de seu oponente')
-                                player1.SiverSerpents -= id_card[3][1]
+                                player1.SilverSerpents -= id_card[3][1]
                                 resurrectedCard = random.randrange(Total_Cards)
                                 os.system('cls')
                                 notContestedbyIA()
@@ -645,7 +646,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                             if CardInHand != 0:
                                 os.system('cls')
                                 print('Você eliminou a carta da direita de seu oponente')
-                                player1.SiverSerpents -= id_card[3][1]
+                                player1.SilverSerpents -= id_card[3][1]
                                 resurrectedCard = random.randrange(Total_Cards)
                                 os.system('cls')
                                 notContestedbyIA()
@@ -705,7 +706,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                             else:
                                 InvalidEntry()                            
                 else:
-                    player1.SiverSerpents -= id_card[3][1]
+                    player1.SilverSerpents -= id_card[3][1]
                     resurrectedCard = random.randrange(Total_Cards)
                     os.system('cls')
                     notContestedbyIA()
@@ -718,8 +719,8 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
         else:
             NotEnoughtMoney()
     elif actionPlayer1 == '6':
-        if player1.SiverSerpents >= id_card[8][1]:
-            if IAplayer.SiverSerpents >= id_card[8][2]:
+        if player1.SilverSerpents >= id_card[8][1]:
+            if IAplayer.SilverSerpents >= id_card[8][2]:
                 if IAplayer.IAdecision() or 'dispute' in Ia_use_this:
                     if 'dispute' not in Ia_use_this: Ia_use_this.append('dispute'), probabilityReset()
                     if 8 in player1.CardsInHand:
@@ -737,9 +738,9 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                                 os.system('cls')
                                 print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata.')
                                 print(f'Ele dividiu {int(id_card[8][2]/2)} com você.')
-                                player1.SiverSerpents += int(id_card[8][2]/2)
-                                IAplayer.SiverSerpents -= int(id_card[8][2])
-                                input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                                player1.SilverSerpents += int(id_card[8][2]/2)
+                                IAplayer.SilverSerpents -= int(id_card[8][2])
+                                input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                                 EnemyTurn()
                             else:
                                 WinGame()
@@ -756,9 +757,9 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                                 os.system('cls')
                                 print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata.')
                                 print(f'Ele dividiu {int(id_card[8][2]/2)} com você.')
-                                player1.SiverSerpents += int(id_card[8][2]/2)
-                                IAplayer.SiverSerpents -= int(id_card[8][2])
-                                input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                                player1.SilverSerpents += int(id_card[8][2]/2)
+                                IAplayer.SilverSerpents -= int(id_card[8][2])
+                                input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                                 EnemyTurn()
                             else:
                                 WinGame()
@@ -856,12 +857,12 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                         notContestedbyIA()
                         print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata.')
                         print(f'Ele dividiu {int(id_card[8][2]/2)} com você.')
-                        player1.SiverSerpents += int(id_card[8][2]/2)
-                        IAplayer.SiverSerpents -= int(id_card[8][2])
-                        input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                        player1.SilverSerpents += int(id_card[8][2]/2)
+                        IAplayer.SilverSerpents -= int(id_card[8][2])
+                        input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                         EnemyTurn()
             else:
-                if IAplayer.SiverSerpents != 0:
+                if IAplayer.SilverSerpents != 0:
                     if IAplayer.IAdecision() or 'dispute' in Ia_use_this:
                         if 'dispute' not in Ia_use_this: Ia_use_this.append('dispute'), probabilityReset()
                         if 8 in player1.CardsInHand:
@@ -877,11 +878,11 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                                     player1.CardsInHand[player1.CardsInHand.index(8)] = ShuffleCard
                                     input(f'A carta {id_card[8][0]} que você revelou ter, foi trocada por {ShuffleCard}')
                                     os.system('cls')
-                                    print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SiverSerpents}.')
-                                    print(f'Ele dividiu {int(IAplayer.SiverSerpents/2)} com você.')
-                                    player1.SiverSerpents += int(IAplayer.SiverSerpents/2)
-                                    IAplayer.SiverSerpents = 0
-                                    input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                                    print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SilverSerpents}.')
+                                    print(f'Ele dividiu {int(IAplayer.SilverSerpents/2)} com você.')
+                                    player1.SilverSerpents += int(IAplayer.SilverSerpents/2)
+                                    IAplayer.SilverSerpents = 0
+                                    input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                                     EnemyTurn()
                                 else:
                                     WinGame()
@@ -896,11 +897,11 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                                     player1.CardsInHand[player1.CardsInHand.index(8)] = ShuffleCard
                                     input(f'A carta {id_card[8][0]} que você revelou ter, foi trocada por {ShuffleCard}')
                                     os.system('cls')
-                                    print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SiverSerpents}.')
-                                    print(f'Ele dividiu {int(IAplayer.SiverSerpents/2)} com você.')
-                                    player1.SiverSerpents += int(IAplayer.SiverSerpents/2)
-                                    IAplayer.SiverSerpents = 0
-                                    input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                                    print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SilverSerpents}.')
+                                    print(f'Ele dividiu {int(IAplayer.SilverSerpents/2)} com você.')
+                                    player1.SilverSerpents += int(IAplayer.SilverSerpents/2)
+                                    IAplayer.SilverSerpents = 0
+                                    input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                                     EnemyTurn()
                                 else:
                                     WinGame()
@@ -1083,11 +1084,11 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                         else:
                             os.system('cls')
                             notContestedbyIA()
-                            print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SiverSerpents}.')
-                            print(f'Ele dividiu {int(IAplayer.SiverSerpents/2)} com você.')
-                            player1.SiverSerpents += int(IAplayer.SiverSerpents/2)
-                            IAplayer.SiverSerpents = 0
-                            input(f'Agora, seu adversário possui {IAplayer.SiverSerpents} serpentes de prata. E você possui {player1.SiverSerpents}!')
+                            print(f'Você mandou o traira roubar {id_card[8][2]} serpentes de prata, porém, ele só encontrou {IAplayer.SilverSerpents}.')
+                            print(f'Ele dividiu {int(IAplayer.SilverSerpents/2)} com você.')
+                            player1.SilverSerpents += int(IAplayer.SilverSerpents/2)
+                            IAplayer.SilverSerpents = 0
+                            input(f'Agora, seu adversário possui {IAplayer.SilverSerpents} serpentes de prata. E você possui {player1.SilverSerpents}!')
                             EnemyTurn()
                 else:
                     os.system('cls')
@@ -1097,7 +1098,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
             NotEnoughtMoney()
     #feito acima
     elif actionPlayer1 == '7':
-        if player1.SiverSerpents >= id_card[7][1]:
+        if player1.SilverSerpents >= id_card[7][1]:
             if IAplayer.IAdecision() or 'dispute' in Ia_use_this:
                 if 'dispute' not in Ia_use_this: Ia_use_this.append('dispute'), probabilityReset()
                 if 7 in player1.CardsInHand:
@@ -1152,8 +1153,9 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
                             InvalidEntry() 
             else:
                 for valor in id_card: id_card[valor][1] += 1
+                id_card[7][2] += 1
                 os.system('cls')
-                input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][1]} serpentes de prata.')
+                input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][2]} serpentes de prata, tendo agora: {player1.SilverSerpents} serpentes de prata!')
                 EnemyTurn()
         else:
             NotEnoughtMoney()
@@ -1179,7 +1181,7 @@ Seu Adversário tem {IAplayer.SiverSerpents} serpentes de prata.
 
 def NotEnoughtMoney():
     os.system('cls')
-    input(f'Você possui apenas {player1.SiverSerpents}, junte mais serpentes de prata para realizar está ação!')
+    input(f'Você possui apenas {player1.SilverSerpents}, junte mais serpentes de prata para realizar está ação!')
     player1_round()
 
 def WinGame():
