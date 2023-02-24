@@ -2,7 +2,19 @@
 Hoodwink, python console card game
 
 HOODWINK
-Habilidades das cartas
+REGRAS
+
+1 - Se você for contestado, e não tiver a carta que diz ter, a ação da carta que você não tinha, não sera executada.
+Porém, se você tiver a carta, seu openente perde uma carta e a ação da carta
+que revelou ter é executada.
+
+2 - Quando suas 2 cartas forem mortas, você perde.
+
+3 - Quando uma jogada é contestada, e uma carta é revelada para negar o contestamento. O jogador troca a carta que foi revelada para não ficar em desvantagem.
+
+4 - Se uma carta sua foi morta por um Kamikaze, um outro kamikaze não podera ser usado como resposta ao ataque.
+
+################################################################################
 
 ASSASSINO: Por 4 serpentes de prata, mate uma carta de outro jogador.
 
