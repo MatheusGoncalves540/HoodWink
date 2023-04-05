@@ -42,6 +42,7 @@ class player:
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
+        self.debt = 0
 
 class IA():
     def __init__(self):
@@ -90,7 +91,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
     Usar uma habilidade de uma das seguintes cartas:
     Assassino, diz: "A lâmina que não se vê, é a mais mortifera" - (4)  | Preço: {id_card[2][1]}
 
-    Coveiro, diz: "Só mais um pouco e então, descanse em paz" - (5)     | Preço: {id_card[3][1]}
+    Coveiro, diz: "Só mais um pouco e então, descanse" - (5)            | Preço: {id_card[3][1]}
 
     Traíra, diz:"Um virar de costas merece uma faca" - (6)              | Preço: {id_card[8][1]}
 
@@ -129,7 +130,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                         IAplayer.CardsInHand[IAplayer.CardsInHand.index(6)] == random.randrange(Total_Cards)
                         os.system('cls')
                         print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                         if kamikaze == '1':
                             if IAplayer.IAdecision():
                                 if 0 in player1.CardsInHand:
@@ -221,7 +222,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 IAplayer.CardsInHand[IAplayer.CardsInHand.index(1)] == random.randrange(Total_Cards)
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -297,7 +298,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 IAplayer.CardsInHand[IAplayer.CardsInHand.index(1)] == random.randrange(Total_Cards)
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -376,7 +377,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 IAplayer.CardsInHand[IAplayer.CardsInHand.index(1)] == random.randrange(Total_Cards)
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -441,7 +442,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 input(f'O adversário contestou, e estava certo... Você perdeu a sua carta {id_card[lostCard][0]}')
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -507,7 +508,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 IAplayer.CardsInHand[IAplayer.CardsInHand.index(1)] == random.randrange(Total_Cards)
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -573,7 +574,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                             else:
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -673,7 +674,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                         else:
                             os.system('cls')
                             print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                             if kamikaze == '1':
                                 if IAplayer.IAdecision():
                                     if 0 in player1.CardsInHand:
@@ -782,7 +783,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                         else:
                             os.system('cls')
                             print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                             if kamikaze == '1':
                                 if IAplayer.IAdecision():
                                     if 0 in player1.CardsInHand:
@@ -926,7 +927,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                             else:
                                 os.system('cls')
                                 print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                 if kamikaze == '1':
                                     if IAplayer.IAdecision():
                                         if 0 in player1.CardsInHand:
@@ -981,7 +982,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                         IAplayer.CardsInHand[IAplayer.CardsInHand.index(6)] == random.randrange(Total_Cards)
                                         os.system('cls')
                                         print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                         if kamikaze == '1':
                                             if IAplayer.IAdecision():
                                                 if 0 in player1.CardsInHand:
@@ -1053,7 +1054,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                                 else:
                                     os.system('cls')
                                     print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                                    kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                                    kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                                     if kamikaze == '1':
                                         if IAplayer.IAdecision():
                                             if 0 in player1.CardsInHand:
@@ -1150,7 +1151,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     else:
                         os.system('cls')
                         print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                         if kamikaze == '1':
                             if IAplayer.IAdecision():
                                 if 0 in player1.CardsInHand:
@@ -1270,7 +1271,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     else:
                         os.system('cls')
                         print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA)\nSua ação: ')
+                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
                         if kamikaze == '1':
                             if IAplayer.IAdecision():
                                 if 0 in player1.CardsInHand:
@@ -1323,7 +1324,93 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
         else: NotEnoughtMoney()
     #feito acima  
     elif actionPlayer1 == '9':
-        ...
+        if player1.debt > 0:
+            os.system('cls')
+            input("Você já está em divida com o duque.\nEle não te empresta-rá mais serpentes até que você o pague.")
+            player1_round()
+        else:
+            if IAplayer.IAdecision() or 'countess' in Ia_use_this:
+                if 'countess' not in Ia_use_this: Ia_use_this.append('countess'), probabilityReset()
+                contested = input('O adversário útilizou a condessa, você não pegou serpentes de prata, nem será cobrado pelo duque. Gostaria de contestar? sim (1), não (0)\nSua ação: ')
+                if contested == '1':
+                    if 6 in IAplayer.CardsInHand:
+                        if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
+                        elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
+                        else: lostCard = random.choice(player1.CardsInHand)
+                        input(f'O adversário tinha a condessa, você perdeu a seguinte carta: {id_card[lostCard][0]}')
+                        player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
+                        if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
+                            loseGame()
+                        else:
+                            IAplayer.CardsInHand[IAplayer.CardsInHand.index(6)] == random.randrange(Total_Cards)
+                            os.system('cls')
+                            print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
+                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
+                            if kamikaze == '1':
+                                if IAplayer.IAdecision():
+                                    if 0 in player1.CardsInHand:
+                                        os.system('cls')
+                                        input('O adverário te contestou, porém, ele estava enganado, fazendo-o perder mais uma carta...')
+                                        WinGame()
+                                    else:
+                                        os.system('cls')
+                                        input('O adverário te contestou, e ele estava certo sobre seu blefe...')
+                                        loseGame()
+                                else:
+                                    os.system('cls')
+                                    notContestedbyIA()
+                                    witchCardKill = input(f'Qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
+                                    if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                                        IAplayer.CardsInHand[1] = -1
+                                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                        if CardInHand != 0:
+                                            input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
+                                            EnemyTurn()
+                                        else:
+                                            WinGame()
+                                    elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                                        IAplayer.CardsInHand[0] = -1
+                                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                        if CardInHand != 0:
+                                            input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
+                                            EnemyTurn()
+                                        else:
+                                            WinGame()
+                                    else:
+                                        InvalidEntry()
+                            elif kamikaze == '0':
+                                EnemyTurn()
+                            else:
+                                InvalidEntry()
+                    else:
+                        os.system('cls')
+                        witchCardKill = input(f'O adversário não tem a condessa, qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
+                        if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                            IAplayer.CardsInHand[1] = -1
+                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                            if CardInHand != 0:
+                                input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
+                                if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
+                                EnemyTurn()
+                            else:
+                                WinGame()
+                        elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                            IAplayer.CardsInHand[0] = -1
+                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                            if CardInHand != 0:
+                                input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
+                                if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
+                                EnemyTurn()
+                            else:
+                                WinGame()
+                        else:
+                            InvalidEntry()
+                elif contested == '0':
+                    EnemyTurn()
+                else:
+                    InvalidEntry()
+            else:
+                ...
     else:
         InvalidEntry()  
    
