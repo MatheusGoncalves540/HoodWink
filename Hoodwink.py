@@ -15,15 +15,15 @@ id_card = { # ID da carta : ['Nome da carta', Preço, ação extra 1, ação ext
     2 : ['Assassino', 4],
     3 : ['Coveiro', 6],
     4 : ['Bufão', 2],
-    # preço = valor cobrado por round | ação extra 1 = valor de serpentes pegas no round
-    5 : ['Duque', 2, 4,],
+    # preço = juros | ação extra 1 = valor de serpentes pegas no round
+    5 : ['Duque', 0, 4],
     6 : ['Condessa', 0],
     #ação extra 1 = valor recebido ao aumentar os preços
     7 : ['Marquês', 0, 1],
     #ação extra 1 = valor retirado do inimigo
     8 : ['Traira', 0, 2],
     #ação extra 1 = valor reduzido dos preços
-    9 : ['Rebelde', 2, 1],
+    9 : ['Rebelde', 1, 1],
 }
 
 Total_Cards = len(id_card) -  2
@@ -42,12 +42,13 @@ class player:
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
-        self.debt = 0
+        self.debt = []
 
 class IA():
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
+        self.debt = []
 
     def IAdecision(self):
         if random.choice(probability) == 1:
@@ -71,9 +72,18 @@ os.system('cls')
 Ia_use_this = []
 
 def player1_round():
-    #player1.CardsInHand [0] = 8
-    
     os.system('cls')
+    if len(player1.debt) > 0:
+        if player1.debt[0] != 0:
+            if player1.SilverSerpents < player1.debt[0]:
+                input("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
+                if player1.SilverSerpents != 0:
+                    input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta da {}")
+            else:
+                input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
+        player1.SilverSerpents -= player1.debt[0]
+        del player1.debt[0]
+
     translated_ids = [id_card[card] for card in player1.CardsInHand]
     if translated_ids[0][0] != '' and translated_ids[1][0] != '': TranslatedHand = f'{translated_ids[0][0]} e {translated_ids[1][0]}'
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
@@ -1324,9 +1334,9 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
         else: NotEnoughtMoney()
     #feito acima  
     elif actionPlayer1 == '9':
-        if player1.debt > 0:
+        if len(player1.debt) > 0:
             os.system('cls')
-            input("Você já está em divida com o duque.\nEle não te empresta-rá mais serpentes até que você o pague.")
+            input(f"Você já tem um divida de {sum(player1.debt)} serpentes de prata com o duque.\nEle não te empresta-rá mais serpentes até que você pague o que deve.")
             player1_round()
         else:
             if IAplayer.IAdecision() or 'countess' in Ia_use_this:
@@ -1410,7 +1420,14 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                 else:
                     InvalidEntry()
             else:
-                ...
+                os.system('cls')
+                player1.debt.append(0)
+                player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
+                player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
+                if id_card[5][1] > 0:
+                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}Daqui 3 rounds: {player1.debt[1]}")
+                else:
+                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}\nDaqui 3 rounds: {player1.debt[1]}")
     else:
         InvalidEntry()  
    
@@ -1463,7 +1480,11 @@ def notContestedbyIA():
 def probabilityReset():
     #print('Probabilidade resetada')
     probability.clear()
-    probability.append([0, 0, 0, 0, 1])
+    probability.append(0)
+    probability.append(0)
+    probability.append(0)
+    probability.append(0)
+    probability.append(1)
 
 def EnemyTurn():
     Ia_use_this.clear()
