@@ -10,7 +10,7 @@ que revelou ter é executada.
 
 2 - Quando suas 2 cartas forem mortas, você perde.
 
-3 - Quando uma jogada é contestada, e uma carta é revelada para negar o contestamento. O jogador troca a carta que foi revelada para não ficar em desvantagem.
+3 - Quando uma jogada é contestada, e uma carta é revelada para negar o contestamento. O jogador troca a carta que foi revelada.
 
 4 - Se uma carta sua foi morta por um Kamikaze, um outro kamikaze não podera ser usado como resposta ao ataque.
 

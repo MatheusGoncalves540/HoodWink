@@ -1122,7 +1122,6 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                             os.system('cls')
                             print('Você eliminou a carta da esquerda de seu oponente')
                             for valor in id_card: id_card[valor][1] += 1
-                            print(player1.SilverSerpents)
                             player1.SilverSerpents += id_card[7][2]
                             input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][2]} serpentes de prata, tendo agora: {player1.SilverSerpents} serpentes de prata!')
                             id_card[7][2] += 1
@@ -1344,97 +1343,186 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                 player1_round()
             else: InvalidEntry()
         else:
-            if IAplayer.IAdecision() or 'countess' in Ia_use_this:
-                if 'countess' not in Ia_use_this: Ia_use_this.append('countess'), probabilityReset()
-                contested = input('O adversário útilizou a condessa, você não pegou serpentes de prata, nem será cobrado pelo duque. Gostaria de contestar? Não (0), Sim (1)\nSua ação: ')
-                if contested == '1':
-                    if 6 in IAplayer.CardsInHand:
-                        if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
-                        elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
-                        else: lostCard = random.choice(player1.CardsInHand)
-                        input(f'O adversário tinha a condessa, você perdeu a seguinte carta: {id_card[lostCard][0]}')
-                        player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
-                        if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
-                            loseGame()
-                        else:
-                            IAplayer.CardsInHand[IAplayer.CardsInHand.index(6)] == random.randrange(Total_Cards)
+            if IAplayer.IAdecision() or 'dispute' in Ia_use_this:
+                if 'dispute' not in Ia_use_this: Ia_use_this.append('dispute'), probabilityReset()
+                if 5 in player1.CardsInHand:
+                    witchCardKill = input('O adversário contestou sua jogada, porém estava enganado. Qual carta adversária gostaria de eliminar? Esquerda (0), Direita (1)\nSua Ação:')
+                    if witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                        IAplayer.CardsInHand[0] == -1
+                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                        if CardInHand != 0:
                             os.system('cls')
-                            print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
-                            kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
-                            if kamikaze == '1':
-                                if IAplayer.IAdecision():
-                                    if 0 in player1.CardsInHand:
-                                        os.system('cls')
-                                        input('O adverário te contestou, porém, ele estava enganado, fazendo-o perder mais uma carta...')
-                                        WinGame()
-                                    else:
-                                        os.system('cls')
-                                        input('O adverário te contestou, e ele estava certo sobre seu blefe...')
-                                        loseGame()
-                                else:
-                                    os.system('cls')
-                                    notContestedbyIA()
-                                    witchCardKill = input(f'Qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
-                                    if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
-                                        IAplayer.CardsInHand[1] = -1
-                                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
-                                        if CardInHand != 0:
-                                            input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
-                                            EnemyTurn()
-                                        else:
-                                            WinGame()
-                                    elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
-                                        IAplayer.CardsInHand[0] = -1
-                                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
-                                        if CardInHand != 0:
-                                            input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
-                                            EnemyTurn()
-                                        else:
-                                            WinGame()
-                                    else:
-                                        InvalidEntry()
-                            elif kamikaze == '0':
+                            print('Você eliminou a carta da esquerda de seu oponente')
+                            player1.debt.append(0)
+                            player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
+                            player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
+                            if id_card[5][1] > 0:
+                                input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
                                 EnemyTurn()
                             else:
-                                InvalidEntry()
+                                input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                            EnemyTurn()
+                        else:
+                            WinGame()
+                    elif witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                        IAplayer.CardsInHand[1] == -1
+                        CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                        if CardInHand != 0:
+                            os.system('cls')
+                            print('Você eliminou a carta da esquerda de seu oponente')
+                            player1.debt.append(0)
+                            player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
+                            player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
+                            if id_card[5][1] > 0:
+                                input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                                EnemyTurn()
+                            else:
+                                input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                            EnemyTurn()
+                        else:
+                            WinGame()
+                    else:
+                        InvalidEntry()
+                else:
+                    if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
+                    elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
+                    else: lostCard = random.choice(player1.CardsInHand)
+                    input(f'O adversário contestou corretamente, você perdeu a carta {id_card[lostCard][0]}')
+                    player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
+                    if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
+                        loseGame()
                     else:
                         os.system('cls')
-                        witchCardKill = input(f'O adversário não tem a condessa, qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
-                        if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
-                            IAplayer.CardsInHand[1] = -1
-                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
-                            if CardInHand != 0:
-                                input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
-                                if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
-                                EnemyTurn()
+                        print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
+                        kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
+                        if kamikaze == '1':
+                            if IAplayer.IAdecision():
+                                if 0 in player1.CardsInHand:
+                                    os.system('cls')
+                                    input('O adverário te contestou, porém, ele estava enganado, fazendo-o perder mais uma carta...')
+                                    WinGame()
+                                else:
+                                    os.system('cls')
+                                    input('O adverário te contestou, e ele estava certo sobre seu blefe...')
+                                    loseGame()
                             else:
-                                WinGame()
-                        elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
-                            IAplayer.CardsInHand[0] = -1
-                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
-                            if CardInHand != 0:
-                                input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
-                                if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
-                                EnemyTurn()
-                            else:
-                                WinGame()
+                                os.system('cls')
+                                notContestedbyIA()
+                                witchCardKill = input(f'Qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
+                                if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                                    IAplayer.CardsInHand[1] = -1
+                                    CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                    if CardInHand != 0:
+                                        input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
+                                        EnemyTurn()
+                                    else:
+                                        WinGame()
+                                elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                                    IAplayer.CardsInHand[0] = -1
+                                    CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                    if CardInHand != 0:
+                                        input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
+                                        EnemyTurn()
+                                    else:
+                                        WinGame()
+                                else:
+                                    InvalidEntry()
+                        elif kamikaze == '0':
+                            EnemyTurn()
                         else:
-                            InvalidEntry()
-                elif contested == '0':
-                    EnemyTurn()
-                else:
-                    InvalidEntry()
+                            InvalidEntry() 
             else:
-                os.system('cls')
-                player1.debt.append(0)
-                player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
-                player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
-                if id_card[5][1] > 0:
-                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
-                    EnemyTurn()
+                if IAplayer.IAdecision() or 'countess' in Ia_use_this:
+                    if 'countess' not in Ia_use_this: Ia_use_this.append('countess'), probabilityReset()
+                    contested = input('O adversário útilizou a condessa, você não pegou serpentes de prata, nem será cobrado pelo duque. Gostaria de contestar? Não (0), Sim (1)\nSua ação: ')
+                    if contested == '1':
+                        if 6 in IAplayer.CardsInHand:
+                            if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
+                            elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
+                            else: lostCard = random.choice(player1.CardsInHand)
+                            input(f'O adversário tinha a condessa, você perdeu a seguinte carta: {id_card[lostCard][0]}')
+                            player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
+                            if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
+                                loseGame()
+                            else:
+                                IAplayer.CardsInHand[IAplayer.CardsInHand.index(6)] == random.randrange(Total_Cards)
+                                os.system('cls')
+                                print('Você perdeu uma carta... Gostaria de usar o Kamikaze? sim (1), não (0)')
+                                kamikaze = input('(SE RESPONDER SIM PARA ESTA AÇÃO, VOCÊ GANHARÁ OU PERDERÁ NESTA RODADA CASO O OPONENTE CONTESTE)\nSua ação: ')
+                                if kamikaze == '1':
+                                    if IAplayer.IAdecision():
+                                        if 0 in player1.CardsInHand:
+                                            os.system('cls')
+                                            input('O adverário te contestou, porém, ele estava enganado, fazendo-o perder mais uma carta...')
+                                            WinGame()
+                                        else:
+                                            os.system('cls')
+                                            input('O adverário te contestou, e ele estava certo sobre seu blefe...')
+                                            loseGame()
+                                    else:
+                                        os.system('cls')
+                                        notContestedbyIA()
+                                        witchCardKill = input(f'Qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
+                                        if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                                            IAplayer.CardsInHand[1] = -1
+                                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                            if CardInHand != 0:
+                                                input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
+                                                EnemyTurn()
+                                            else:
+                                                WinGame()
+                                        elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                                            IAplayer.CardsInHand[0] = -1
+                                            CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                            if CardInHand != 0:
+                                                input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
+                                                EnemyTurn()
+                                            else:
+                                                WinGame()
+                                        else:
+                                            InvalidEntry()
+                                elif kamikaze == '0':
+                                    EnemyTurn()
+                                else:
+                                    InvalidEntry()
+                        else:
+                            os.system('cls')
+                            witchCardKill = input(f'O adversário não tem a condessa, qual carta adversária você quer matar? Esquerda (0) Direita (1)\nSua Ação: ')
+                            if witchCardKill == '1' and IAplayer.CardsInHand[1] != -1:
+                                IAplayer.CardsInHand[1] = -1
+                                CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                if CardInHand != 0:
+                                    input(f'Você matou a carta da direita de seu oponente, agora ele possui {CardInHand} carta')
+                                    if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
+                                    EnemyTurn()
+                                else:
+                                    WinGame()
+                            elif witchCardKill == '0' and IAplayer.CardsInHand[0] != -1:
+                                IAplayer.CardsInHand[0] = -1
+                                CardInHand = len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)
+                                if CardInHand != 0:
+                                    input(f'Você matou a carta da esquerda de seu oponente, agora ele possui {CardInHand} carta')
+                                    if IAplayer.IAdecision() or 'kamikaze' in Ia_use_this: IaUsesKamikaze()
+                                    EnemyTurn()
+                                else:
+                                    WinGame()
+                            else:
+                                InvalidEntry()
+                    elif contested == '0':
+                        EnemyTurn()
+                    else:
+                        InvalidEntry()
                 else:
-                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
-                    EnemyTurn()
+                    os.system('cls')
+                    player1.debt.append(0)
+                    player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
+                    player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
+                    if id_card[5][1] > 0:
+                        input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                        EnemyTurn()
+                    else:
+                        input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                        EnemyTurn()
     #feito acima 
     elif actionPlayer1 == '10':
         ...
