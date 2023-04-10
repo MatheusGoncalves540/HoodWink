@@ -102,7 +102,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
 
     Bufão, diz: "Que tal um truque de mágica?" - (8)                    | Preço: {id_card[4][1]}
 
-    Duque, diz: "Gostaria de um emprestimo?" - (9)                      | Preço por turno: {id_card[5][1]}
+    Duque, diz: "Gostaria de um emprestimo?" - (9)                      | Juros: {id_card[5][1]}
 
     Kamikaze, diz: "Preparar para voar!" - (10)                         | Preço: Uma de suas cartas
 
@@ -1431,7 +1431,9 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                 player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
                 if id_card[5][1] > 0:
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                    EnemyTurn()
                 else:
+                    EnemyTurn()
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
     #feito acima 
     elif actionPlayer1 == '10':
@@ -1515,8 +1517,9 @@ def probabilityReset():
 def EnemyTurn():
     Ia_use_this.clear()
     os.system('cls')
+    input('Turno do adversário')
     player1_round()
-    print('Turno do adversário')
+    
 
 def InvalidEntry():
     os.system('cls')
