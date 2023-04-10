@@ -1454,6 +1454,7 @@ def demand_debt():
                 input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
                 player1.CardsInHand[dukes_assassin[1]] = -1
                 player1.angry_duke = True
+                player1.debt.clear()
                 if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
             else:
                 input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
