@@ -1122,9 +1122,10 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                             os.system('cls')
                             print('Você eliminou a carta da esquerda de seu oponente')
                             for valor in id_card: id_card[valor][1] += 1
+                            print(player1.SilverSerpents)
                             player1.SilverSerpents += id_card[7][2]
-                            id_card[7][2] += 1
                             input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][2]} serpentes de prata, tendo agora: {player1.SilverSerpents} serpentes de prata!')
+                            id_card[7][2] += 1
                             EnemyTurn()
                         else:
                             WinGame()
@@ -1136,8 +1137,9 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                             print('Você eliminou a carta da direita de seu oponente')
                             for valor in id_card: id_card[valor][1] += 1
                             player1.SilverSerpents += id_card[7][2]
-                            id_card[7][2] += 1
                             input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][2]} serpentes de prata, tendo agora: {player1.SilverSerpents} serpentes de prata!')
+                            id_card[7][2] += 1
+                            
                             EnemyTurn()
                         else:
                             WinGame()
@@ -1147,7 +1149,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
                     elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
                     else: lostCard = random.choice(player1.CardsInHand)
-                    input(f'O adversário contestou corretamente, você perdeu a carta {id_card[lostCard]}')
+                    input(f'O adversário contestou corretamente, você perdeu a carta {id_card[lostCard][0]}')
                     player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
                     if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
                         loseGame()
@@ -1194,9 +1196,9 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
             else:
                 for valor in id_card: id_card[valor][1] += 1
                 player1.SilverSerpents += id_card[7][2]
-                id_card[7][2] += 1
                 os.system('cls')
                 input(f'Todos os preços foram aumentados em 1. Você recebeu {id_card[7][2]} serpentes de prata, tendo agora: {player1.SilverSerpents} serpentes de prata!')
+                id_card[7][2] += 1
                 EnemyTurn()
         else:
             NotEnoughtMoney()
@@ -1331,7 +1333,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
             input(f"Você já tem um divida de {sum(player1.debt)} serpentes de prata com o duque.\nEle não te empresta-rá mais serpentes até que você pague o que deve.")
             player1_round()
         elif player1.angry_duke == True:
-            beg = input(f"Você não pagou sua divida com o duque quando fez negócios com ele da última vez.\nEle exige que implore por perdão. Deseja fazer isso? Não (0) Sim (1)")
+            beg = input(f"Você não pagou sua divida com o duque quando fez negócios com ele da última vez.\nEle exige que implore por perdão. Deseja fazer isso? Não (0) Sim (1)\nSua ação: ")
             if beg == '1':
                 input('Você implora pelo perdão do duque, jogando sua dignidade fora.\nEle te perdoa, e voltará a fazer negócios com você.')
                 player1.angry_duke = False
@@ -1428,9 +1430,9 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                 player1.debt.append((id_card[5][2]+id_card[5][1]) // 2)
                 player1.debt.append((id_card[5][2]+id_card[5][1]) // 2 + (id_card[5][2]+id_card[5][1]) % 2)
                 if id_card[5][1] > 0:
-                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}Daqui 3 rounds: {player1.debt[1]}")
+                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
                 else:
-                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}\nDaqui 3 rounds: {player1.debt[1]}")
+                    input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
     #feito acima 
     elif actionPlayer1 == '10':
         ...
