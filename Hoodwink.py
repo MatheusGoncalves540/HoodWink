@@ -42,13 +42,15 @@ class player:
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
-        self.debt = []
+        self.debt = [9]
+        self.angry_duke = False
 
 class IA():
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
         self.debt = []
+        self.angry_duke = False
 
     def IAdecision(self):
         if random.choice(probability) == 1:
@@ -73,17 +75,8 @@ Ia_use_this = []
 
 def player1_round():
     os.system('cls')
-    if len(player1.debt) > 0:
-        if player1.debt[0] != 0:
-            if player1.SilverSerpents < player1.debt[0]:
-                input("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
-                if player1.SilverSerpents != 0:
-                    input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta da {}")
-            else:
-                input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
-        player1.SilverSerpents -= player1.debt[0]
-        del player1.debt[0]
-
+    demand_debt()
+    os.system('cls')
     translated_ids = [id_card[card] for card in player1.CardsInHand]
     if translated_ids[0][0] != '' and translated_ids[1][0] != '': TranslatedHand = f'{translated_ids[0][0]} e {translated_ids[1][0]}'
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
@@ -105,7 +98,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
 
     Traíra, diz:"Um virar de costas merece uma faca" - (6)              | Preço: {id_card[8][1]}
 
-    Marquês, diz: "É preciso aumentar as taxas" - (7)                   | Preço: {id_card[7][1]}
+    Marquês, diz: "É necessário aumentar as taxas" - (7)                | Preço: {id_card[7][1]}
 
     Bufão, diz: "Que tal um truque de mágica?" - (8)                    | Preço: {id_card[4][1]}
 
@@ -1331,17 +1324,27 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     input(f'A carta da direita do seu oponente é: {id_card[IAplayer.CardsInHand[1]][0]}')
                     EnemyTurn()
                 else:InvalidEntry()
-        else: NotEnoughtMoney()
-    #feito acima  
+        else: NotEnoughtMoney() 
     elif actionPlayer1 == '9':
         if len(player1.debt) > 0:
             os.system('cls')
             input(f"Você já tem um divida de {sum(player1.debt)} serpentes de prata com o duque.\nEle não te empresta-rá mais serpentes até que você pague o que deve.")
             player1_round()
+        elif player1.angry_duke == True:
+            beg = input(f"Você não pagou sua divida com o duque quando fez negócios com ele da última vez.\nEle exige que implore por perdão. Deseja fazer isso? Não (0) Sim (1)")
+            if beg == '1':
+                input('Você implora pelo perdão do duque, jogando sua dignidade fora.\nEle te perdoa, e voltará a fazer negócios com você.')
+                player1.angry_duke = False
+                EnemyTurn()
+            elif beg == '0':
+                os.system('cls')
+                input('Você se recusou a implorar')
+                player1_round()
+            else: InvalidEntry()
         else:
             if IAplayer.IAdecision() or 'countess' in Ia_use_this:
                 if 'countess' not in Ia_use_this: Ia_use_this.append('countess'), probabilityReset()
-                contested = input('O adversário útilizou a condessa, você não pegou serpentes de prata, nem será cobrado pelo duque. Gostaria de contestar? sim (1), não (0)\nSua ação: ')
+                contested = input('O adversário útilizou a condessa, você não pegou serpentes de prata, nem será cobrado pelo duque. Gostaria de contestar? Não (0), Sim (1)\nSua ação: ')
                 if contested == '1':
                     if 6 in IAplayer.CardsInHand:
                         if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
@@ -1428,15 +1431,35 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}Daqui 3 rounds: {player1.debt[1]}")
                 else:
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[0]}\nDaqui 3 rounds: {player1.debt[1]}")
+    #feito acima 
+    elif actionPlayer1 == '10':
+        ...
     else:
         InvalidEntry()  
    
-"""
-    elif actionPlayer1 == '10':
-        
+"""       
     elif actionPlayer1 == '11':
 """
 
+def demand_debt():
+    if len(player1.debt) > 0:
+        if player1.debt[0] != 0:
+            if player1.SilverSerpents < player1.debt[0]:
+                print("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
+                if player1.CardsInHand[0] == -1: dukes_assassin = ['direita', 1]
+                elif player1.CardsInHand[1] == -1: dukes_assassin = ['esquerda', 0]
+                elif random.choice(range(2)) == 1: dukes_assassin = ['direita', 1]
+                else: dukes_assassin = ['esquerda', 0]
+                player1.SilverSerpents = 0
+                input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
+                player1.CardsInHand[dukes_assassin[1]] = -1
+                player1.angry_duke = True
+                if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
+            else:
+                input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
+                player1.SilverSerpents -= player1.debt[0]
+                del player1.debt[0]
+        else: del player1.debt[0]
 
 def IaUsesKamikaze():
     if 'kamikaze' not in Ia_use_this: Ia_use_this.append('kamikaze'), probabilityReset()
