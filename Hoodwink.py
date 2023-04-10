@@ -1433,8 +1433,8 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\nComo os impostos foram aumentados recentemente, o juros adicionado à sua divida será de: {id_card[5][1]}\nTotalizando: {sum(player1.debt)} serpentes de prata à serem pagos.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
                     EnemyTurn()
                 else:
-                    EnemyTurn()
                     input(f"Você pegou com o duque, {id_card[5][2]} serpentes de prata.\nPelas suas próximas 2 jogadas (a partir dos próximos 2 rounds), terá de pagar este valor à ele de volta.\n\nSendo os valores das parcelas:\nDaqui 2 rounds: {player1.debt[1]}\nDaqui 3 rounds: {player1.debt[2]}")
+                    EnemyTurn()
     #feito acima 
     elif actionPlayer1 == '10':
         ...
