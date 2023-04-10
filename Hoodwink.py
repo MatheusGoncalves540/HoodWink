@@ -42,7 +42,7 @@ class player:
     def __init__(self):
         self.CardsInHand = [random.randrange(Total_Cards) for card in range(2)]
         self.SilverSerpents = silver_initial
-        self.debt = [9]
+        self.debt = []
         self.angry_duke = False
 
 class IA():
