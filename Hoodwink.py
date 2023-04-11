@@ -23,7 +23,7 @@ id_card = { # ID da carta : ['Nome da carta', Preço, ação extra 1, ação ext
     #ação extra 1 = valor retirado do inimigo
     8 : ['Traira', 0, 2],
     #ação extra 1 = valor reduzido dos preços
-    9 : ['Rebelde', 1, 1],
+    9 : ['Rebelde', 3, 1],
 }
 
 Total_Cards = len(id_card) -  2
@@ -181,7 +181,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
 
     Traíra, diz:"Um virar de costas merece uma faca" - (6)              | Preço: {id_card[8][1]}
 
-    Marquês, diz: "É necessário aumentar as taxas" - (7)                | Preço: {id_card[7][1]}
+    Marquês, diz: "É necessário aumentar as taxas" - (7)                | Valor recebido: {id_card[7][2]}
 
     Bufão, diz: "Que tal um truque de mágica?" - (8)                    | Preço: {id_card[4][1]}
 
