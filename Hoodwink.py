@@ -117,10 +117,10 @@ def notContestedbyIA():
     probability.append(1)
     print('seu adversário não te contestou.')
 
-def probabilityReset():
+def probabilityReset(chance=4):
     #print('Probabilidade resetada')
     probability.clear()
-    for times in range(4):
+    for times in range(chance):
         probability.append(0)
     probability.append(1)
 
