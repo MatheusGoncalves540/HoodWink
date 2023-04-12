@@ -29,6 +29,8 @@ id_card = { # ID da carta : ['Nome da carta', Preço, ação extra 1, ação ext
 Total_Cards = len(id_card) -  2
 silver_initial = 8
 probability = [0,0,0,0,1]
+num_Turn = []
+
 
 def VerifyDupCards():
     if player1.CardsInHand[1] == player1.CardsInHand[0]:
@@ -44,6 +46,7 @@ class player:
         self.SilverSerpents = silver_initial
         self.debt = []
         self.angry_duke = False
+        self.duke_been_paid = False
 
 class IA():
     def __init__(self):
@@ -51,6 +54,7 @@ class IA():
         self.SilverSerpents = silver_initial
         self.debt = []
         self.angry_duke = False
+        self.duke_been_paid = False
 
     def IAdecision(self):
         if random.choice(probability) == 1:
@@ -59,25 +63,27 @@ class IA():
             return False
 
 def demand_debt():
-    if len(player1.debt) > 0:
-        if player1.debt[0] != 0:
-            if player1.SilverSerpents < player1.debt[0]:
-                print("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
-                if player1.CardsInHand[0] == -1: dukes_assassin = ['direita', 1]
-                elif player1.CardsInHand[1] == -1: dukes_assassin = ['esquerda', 0]
-                elif random.choice(range(2)) == 1: dukes_assassin = ['direita', 1]
-                else: dukes_assassin = ['esquerda', 0]
-                player1.SilverSerpents = 0
-                input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
-                player1.CardsInHand[dukes_assassin[1]] = -1
-                player1.angry_duke = True
-                player1.debt.clear()
-                if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
-            else:
-                input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
-                player1.SilverSerpents -= player1.debt[0]
-                del player1.debt[0]
-        else: del player1.debt[0]
+    if player1.duke_been_paid == False:
+        if len(player1.debt) > 0:
+            if player1.debt[0] != 0:
+                if player1.SilverSerpents < player1.debt[0]:
+                    print("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
+                    if player1.CardsInHand[0] == -1: dukes_assassin = ['direita', 1]
+                    elif player1.CardsInHand[1] == -1: dukes_assassin = ['esquerda', 0]
+                    elif random.choice(range(2)) == 1: dukes_assassin = ['direita', 1]
+                    else: dukes_assassin = ['esquerda', 0]
+                    player1.SilverSerpents = 0
+                    input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
+                    player1.CardsInHand[dukes_assassin[1]] = -1
+                    player1.angry_duke = True
+                    player1.debt.clear()
+                    if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
+                else:
+                    input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
+                    player1.SilverSerpents -= player1.debt[0]
+                    del player1.debt[0]
+                    player1.duke_been_paid = True
+            else: del player1.debt[0]
 
 def IaUsesKamikaze():
     if 'kamikaze' not in Ia_use_this: Ia_use_this.append('kamikaze'), probabilityReset()
@@ -117,19 +123,12 @@ def notContestedbyIA():
     probability.append(1)
     print('seu adversário não te contestou.')
 
-def probabilityReset(chance=4):
+def probabilityReset(chance=5):
     #print('Probabilidade resetada')
     probability.clear()
     for times in range(chance):
         probability.append(0)
-    probability.append(1)
-
-def EnemyTurn():
-    Ia_use_this.clear()
-    os.system('cls')
-    input('Turno do adversário')
-    player1_round()
-    
+    probability.append(1)    
 
 def InvalidEntry():
     os.system('cls')
@@ -138,7 +137,40 @@ def InvalidEntry():
 
 def loseGame():
     os.system('cls')
-    input('Você Perdeu...')
+    input('''
+███████╗  ███╗░░██╗░█████╗░  ░█████╗░██╗░░██╗░█████╗░████████╗
+██╔════╝  ████╗░██║██╔══██╗  ██╔══██╗██║░░██║██╔══██╗╚══██╔══╝
+█████╗░░  ██╔██╗██║██║░░██║  ██║░░╚═╝███████║███████║░░░██║░░░
+██╔══╝░░  ██║╚████║██║░░██║  ██║░░██╗██╔══██║██╔══██║░░░██║░░░
+██║░░░░░  ██║░╚███║╚█████╔╝  ╚█████╔╝██║░░██║██║░░██║░░░██║░░░
+╚═╝░░░░░  ╚═╝░░╚══╝░╚════╝░  ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠾⠛⠛⢶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣶⠶⠶⢿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⠶⠾⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡟⠒⠾⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣟⣻⣿⣿⣤⠶⠶⠶⢶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠶⠖⠛⠋⠉⠁⣀⣀⣤⣤⡄⠀⣻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟⢁⣤⣤⣤⣤⣼⣷⡾⠟⣿⡻⣿⡿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣼⣬⣽⠏⣿⠀⠈⣧⠀⠸⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠀⢹⣆⠀⢹⡄⠀⢻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⣧⠀⠀⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣻⡄⠀⢸⡆⠀⠸⣟⠛⠳⠶⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠟⠉⣿⣀⡀⣿⣠⣤⡿⠶⠆⠀⠀⠉⠛⢷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠟⠀⠀⠶⠋⠉⠙⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⡄⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠈⣷⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡀⠀⠀⠀⠀⢀⣴⣶⣦⣀⢄⠀⠀⠀⠀⠀⠀⢠⣶⣿⣶⡀⠀⢸⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⣽⣿⣿⣿⣿⣷⡧⠀⠀⠀⠀⠀⣿⣿⣿⣿⣷⡀⠈⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⢻⣿⣿⣿⡿⠀⢰⡇⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⣀⣀⡀⣀⣀⠸⣧⠠⡀⠀⠀⠻⣿⣿⣿⣿⣿⠃⠀⢀⣾⣧⡀⠀⠛⠿⠟⠁⢀⡾⠁⠀⠀⠀⠀⠀⠀
+⠀⣀⣤⣴⣏⢁⣬⣿⣏⣉⣷⠙⢷⣌⠠⠀⠀⠈⠛⠛⠛⠁⠀⠀⠸⠟⠛⠋⠀⠀⠀⢀⣴⠟⠁⢀⣠⣀⠀⣀⣀⠀
+⠿⣇⣀⣾⠋⢻⣧⡴⣿⡉⣹⣇⠀⠙⠳⢦⣤⣤⣤⣤⡤⣀⠀⠀⡀⠀⠀⠀⡀⠀⠀⢸⡇⠀⣰⣯⣡⣽⣿⠉⢹⡧
+⠀⢀⡼⠛⠷⣻⣧⣀⣼⣟⣉⣉⣿⠚⠳⣦⠀⠀⠈⠉⢿⣄⡀⣀⣿⣄⣀⣰⡿⣦⣤⡾⠁⢼⡋⣹⣧⣀⡼⠛⠻⣇
+⠀⠸⠧⠴⢚⣯⣼⣏⣀⣸⣿⡉⢉⣿⡛⠛⣷⠀⠀⠀⠀⠉⠛⠋⠀⠉⠉⠉⠀⠀⠀⠀⠀⠈⢹⣏⡀⣈⣿⣤⣴⠏
+⠀⠀⠀⣰⠏⠁⠀⠈⣟⠁⠈⢹⡏⠉⠙⣿⠋⠀⣖⠛⠛⠶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠀⠀⠀⠀
+⠀⠀⠀⠛⠒⠒⠒⣻⠛⠳⠶⣿⠛⠶⠾⠋⠀⠀⠙⠶⢥⡤⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⢻⣀⣠⡴⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ''')
 
 #EnableIA = input('Bem vindo ao HoodWink, Gostaria de jogar com a IA? Sim (1) ou não (0)?')
 
@@ -154,8 +186,6 @@ os.system('cls')
 # Game Starts Here #
 ####################
 
-
-
 def player1_round():
     os.system('cls')
     demand_debt()
@@ -164,8 +194,8 @@ def player1_round():
     if translated_ids[0][0] != '' and translated_ids[1][0] != '': TranslatedHand = f'{translated_ids[0][0]} e {translated_ids[1][0]}'
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
     else: TranslatedHand = translated_ids[0][0]
-    print(f'''Você tem em mãos: {TranslatedHand}. E Você tem {player1.SilverSerpents} Serpente(s) de Prata
-Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
+    print(f'''Este é o turno {num_Turn[-1]}. Você tem em mãos: {TranslatedHand}. E Você tem {player1.SilverSerpents} Serpente(s) de Prata
+Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {IAplayer.CardsInHand.count(-1) - len(IAplayer.CardsInHand)} cartas.
 
     O turno é seu! (digite o comando que está entre parenteses, para realizar a ação): 
     Pegar 1 serpentes de prata - (1)
@@ -1766,8 +1796,22 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata.
     else:
         InvalidEntry()  
 
+def EnemyTurn():
+    Ia_use_this.clear()
+    num_Turn.append(num_Turn[-1]+1)
+    player1.duke_been_paid = False
+    os.system('cls')
+    input('Turno do adversário')
+    player1_round()
+
+
+
+
+
 if True:#random.randrange(2) == 1:
+    num_Turn.append(1)
     player1_round()
 else:
+    num_Turn = 0
     EnemyTurn()
 
