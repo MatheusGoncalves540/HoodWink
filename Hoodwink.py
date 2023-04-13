@@ -54,36 +54,31 @@ class IA():
         self.SilverSerpents = silver_initial
         self.debt = []
         self.angry_duke = False
-        self.duke_been_paid = False
 
     def IAdecision(self):
-        if random.choice(probability) == 1:
-            return True
-        else:
-            return False
+        if random.choice(probability) == 1: return True
+        else: return False
 
 def demand_debt():
-    if player1.duke_been_paid == False:
-        if len(player1.debt) > 0:
-            if player1.debt[0] != 0:
-                if player1.SilverSerpents < player1.debt[0]:
-                    print("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
-                    if player1.CardsInHand[0] == -1: dukes_assassin = ['direita', 1]
-                    elif player1.CardsInHand[1] == -1: dukes_assassin = ['esquerda', 0]
-                    elif random.choice(range(2)) == 1: dukes_assassin = ['direita', 1]
-                    else: dukes_assassin = ['esquerda', 0]
-                    player1.SilverSerpents = 0
-                    input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
-                    player1.CardsInHand[dukes_assassin[1]] = -1
-                    player1.angry_duke = True
-                    player1.debt.clear()
-                    if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
-                else:
-                    input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
-                    player1.SilverSerpents -= player1.debt[0]
-                    del player1.debt[0]
-                    player1.duke_been_paid = True
-            else: del player1.debt[0]
+    if player1.duke_been_paid == False and len(player1.debt) > 0 and player1.debt[0] != 0:
+        if player1.SilverSerpents < player1.debt[0]:
+            print("O duque veio cobrar sua divida.\nPorém, você não possui o dinheiro que você o deve")
+            if player1.CardsInHand[0] == -1: dukes_assassin = ['direita', 1]
+            elif player1.CardsInHand[1] == -1: dukes_assassin = ['esquerda', 0]
+            elif random.choice(range(2)) == 1: dukes_assassin = ['direita', 1]
+            else: dukes_assassin = ['esquerda', 0]
+            player1.SilverSerpents = 0
+            input(f"Ele tomou o pouco de serpentes que lhe restavam, e mandou o assassino atrás da sua carta {id_card[player1.CardsInHand[dukes_assassin[1]]][0]}")
+            player1.CardsInHand[dukes_assassin[1]] = -1
+            player1.angry_duke = True
+            player1.debt.clear()
+            if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1: loseGame()
+        else:
+            input(f"O duque veio cobrar sua divida.\nFoi pago ao duque {player1.debt[0]} serpentes de prata")
+            player1.SilverSerpents -= player1.debt[0]
+            del player1.debt[0]
+            player1.duke_been_paid = True
+    else: del player1.debt[0]
 
 def IaUsesKamikaze():
     if 'kamikaze' not in Ia_use_this: Ia_use_this.append('kamikaze'), probabilityReset()
@@ -143,7 +138,7 @@ def loseGame():
 █████╗░░  ██╔██╗██║██║░░██║  ██║░░╚═╝███████║███████║░░░██║░░░
 ██╔══╝░░  ██║╚████║██║░░██║  ██║░░██╗██╔══██║██╔══██║░░░██║░░░
 ██║░░░░░  ██║░╚███║╚█████╔╝  ╚█████╔╝██║░░██║██║░░██║░░░██║░░░
-╚═╝░░░░░  ╚═╝░░╚══╝░╚════╝░  ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
+╚═╝░░░    ╚═╝░░╚══╝░╚════╝░  ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠾⠛⠛⢶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣶⠶⠶⢿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⠶⠾⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -195,7 +190,7 @@ def player1_round():
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
     else: TranslatedHand = translated_ids[0][0]
     print(f'''Este é o turno {num_Turn[-1]}. Você tem em mãos: {TranslatedHand}. E Você tem {player1.SilverSerpents} Serpente(s) de Prata
-Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {IAplayer.CardsInHand.count(-1) - len(IAplayer.CardsInHand)} cartas.
+Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)} carta(s).
 
     O turno é seu! (digite o comando que está entre parenteses, para realizar a ação): 
     Pegar 1 serpentes de prata - (1)
@@ -1800,9 +1795,40 @@ def EnemyTurn():
     Ia_use_this.clear()
     num_Turn.append(num_Turn[-1]+1)
     player1.duke_been_paid = False
+
+    if len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1) > 1: cards_in_hand_iaplayer = 'tem as 2 cartas em mãos'
+    elif IAplayer.CardsInHand[0] == -1: cards_in_hand_iaplayer = 'tem apenas a carta da direita'
+    else: cards_in_hand_iaplayer = 'tem apenas a carta da esquerda'
+    
     os.system('cls')
-    input('Turno do adversário')
-    player1_round()
+    input(f'Turno do adversário, ele possuí {IAplayer.SilverSerpents} Serpentes de prata, e {cards_in_hand_iaplayer}')
+    iaChoice = random.randint(0,11)
+    if iaChoice == 1:
+        ...
+    elif iaChoice == 2:
+        ...
+    elif iaChoice == 3:
+        ...
+    elif iaChoice == 4:
+        ...
+    elif iaChoice == 5:
+        ...
+    elif iaChoice == 6:
+        ...
+    elif iaChoice == 7:
+        ...
+    elif iaChoice == 8:
+        ...
+    elif iaChoice == 9:
+        ...
+    elif iaChoice == 10:
+        ...
+    elif iaChoice == 11:
+        ...
+    else: InvalidEntry()
+    
+
+
 
 
 
