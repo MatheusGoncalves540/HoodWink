@@ -55,9 +55,10 @@ class IA():
         self.debt = []
         self.angry_duke = False
         self.possible_choices = []
+        self.cards_Ia_know = []
 
     def pick_possible_choices(self,action1=2,action2=2,action3=4,action4=2,action5=3,
-                              action6,action7,action8,action9,action10,action11):
+                              action6=2,action7=1,action8=2,action9=3,action10=1,action11=1):
         self.possible_choices.clear()
         
         if len(self.debt) > 0 or self.SilverSerpents < 2:
@@ -83,23 +84,40 @@ class IA():
             for chance in range(action5):
                     self.possible_choices.append(5)
         
-        for chance in range(action6):
-                self.possible_choices.append(6)
+        if player1.SilverSerpents > 1:
+            if player1.SilverSerpents >= id_card[8][1] or self.SilverSerpents < 3: action6 += 1
+            if 8 in self.CardsInHand: action6 = action6*2
+            for chance in range(action6):
+                    self.possible_choices.append(6)
         
+        if id_card[4][1] < 2: action7 = action7*4
         for chance in range(action7):
                 self.possible_choices.append(7)
         
-        for chance in range(action8):
-                self.possible_choices.append(8)
+        if len(self.cards_Ia_know) < 2:
+            if len(self.cards_Ia_know) < 1: action8 += 2
+            for chance in range(action8):
+                    self.possible_choices.append(8)
         
+        if self.SilverSerpents >= id_card[5][2]: action9 = action9*2
+        if len(self.CardsInHand) < 2 or self.SilverSerpents < id_card[5][2]: action9 -= 1
         for chance in range(action9):
                 self.possible_choices.append(9)
         
-        for chance in range(action10):
-                self.possible_choices.append(10)
+        if len(self.CardsInHand) != 1:
+            if len(player1.CardsInHand) == 1:
+                self.possible_choices.clear()
+                action10 += 30
+                for chance in range(action10):
+                    self.possible_choices.append(10)
+                return
+            for chance in range(action10):
+                    self.possible_choices.append(10)
         
-        for chance in range(action11):
-                self.possible_choices.append(11)
+        if self.SilverSerpents >= id_card[9][1]:
+            if id_card[4][1] > 2: action11 = action11*4
+            for chance in range(action11):
+                    self.possible_choices.append(11)
 
 
     def IAdecision(self):
@@ -189,32 +207,32 @@ def loseGame():
 ██╔══╝░░  ██║╚████║██║░░██║  ██║░░██╗██╔══██║██╔══██║░░░██║░░░
 ██║░░░░░  ██║░╚███║╚█████╔╝  ╚█████╔╝██║░░██║██║░░██║░░░██║░░░
 ╚═╝░░░    ╚═╝░░╚══╝░╚════╝░  ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠾⠛⠛⢶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣶⠶⠶⢿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢿⣿⠶⠾⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡟⠒⠾⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣟⣻⣿⣿⣤⠶⠶⠶⢶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠶⠖⠛⠋⠉⠁⣀⣀⣤⣤⡄⠀⣻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡟⢁⣤⣤⣤⣤⣼⣷⡾⠟⣿⡻⣿⡿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣼⣬⣽⠏⣿⠀⠈⣧⠀⠸⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠁⠀⢹⣆⠀⢹⡄⠀⢻⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⣧⠀⠀⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣻⡄⠀⢸⡆⠀⠸⣟⠛⠳⠶⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⠟⠉⣿⣀⡀⣿⣠⣤⡿⠶⠆⠀⠀⠉⠛⢷⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣼⠟⠀⠀⠶⠋⠉⠙⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡾⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⡄⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠈⣷⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⣿⡀⠀⠀⠀⠀⢀⣴⣶⣦⣀⢄⠀⠀⠀⠀⠀⠀⢠⣶⣿⣶⡀⠀⢸⡇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⣽⣿⣿⣿⣿⣷⡧⠀⠀⠀⠀⠀⣿⣿⣿⣿⣷⡀⠈⡇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⡀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⢻⣿⣿⣿⡿⠀⢰⡇⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⣀⣀⡀⣀⣀⠸⣧⠠⡀⠀⠀⠻⣿⣿⣿⣿⣿⠃⠀⢀⣾⣧⡀⠀⠛⠿⠟⠁⢀⡾⠁⠀⠀⠀⠀⠀⠀
-⠀⣀⣤⣴⣏⢁⣬⣿⣏⣉⣷⠙⢷⣌⠠⠀⠀⠈⠛⠛⠛⠁⠀⠀⠸⠟⠛⠋⠀⠀⠀⢀⣴⠟⠁⢀⣠⣀⠀⣀⣀⠀
-⠿⣇⣀⣾⠋⢻⣧⡴⣿⡉⣹⣇⠀⠙⠳⢦⣤⣤⣤⣤⡤⣀⠀⠀⡀⠀⠀⠀⡀⠀⠀⢸⡇⠀⣰⣯⣡⣽⣿⠉⢹⡧
-⠀⢀⡼⠛⠷⣻⣧⣀⣼⣟⣉⣉⣿⠚⠳⣦⠀⠀⠈⠉⢿⣄⡀⣀⣿⣄⣀⣰⡿⣦⣤⡾⠁⢼⡋⣹⣧⣀⡼⠛⠻⣇
-⠀⠸⠧⠴⢚⣯⣼⣏⣀⣸⣿⡉⢉⣿⡛⠛⣷⠀⠀⠀⠀⠉⠛⠋⠀⠉⠉⠉⠀⠀⠀⠀⠀⠈⢹⣏⡀⣈⣿⣤⣴⠏
-⠀⠀⠀⣰⠏⠁⠀⠈⣟⠁⠈⢹⡏⠉⠙⣿⠋⠀⣖⠛⠛⠶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠀⠀⠀⠀
-⠀⠀⠀⠛⠒⠒⠒⣻⠛⠳⠶⣿⠛⠶⠾⠋⠀⠀⠙⠶⢥⡤⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢻⣀⣠⡴⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+                 uuuuuuu
+             uu$$$$$$$$$$$uu
+          uu$$$$$$$$$$$$$$$$$uu
+         u$$$$$$$$$$$$$$$$$$$$$u
+        u$$$$$$$$$$$$$$$$$$$$$$$u
+       u$$$$$$$$$$$$$$$$$$$$$$$$$u
+       u$$$$$$$$$$$$$$$$$$$$$$$$$u
+       u$$$$$$"   "$$$"   "$$$$$$u
+       "$$$$"      u$u       $$$$"
+        $$$u       u$u       u$$$
+        $$$u      u$$$u      u$$$
+         "$$$$uu$$$   $$$uu$$$$"
+          "$$$$$$$"   "$$$$$$$"
+            u$$$$$$$u$$$$$$$u
+             u$"$"$"$"$"$"$u
+  uuu        $$u$ $ $ $ $u$$       uuu
+ u$$$$        $$$$$u$u$u$$$       u$$$$
+  $$$$$uu      "$$$$$$$$$"     uu$$$$$$
+u$$$$$$$$$$$uu    """""    uuuu$$$$$$$$$$
+$$$$"""$$$$$$$$$$uuu   uu$$$$$$$$$"""$$$"
+ """      ""$$$$$$$$$$$uu ""$"""
+           uuuu ""$$$$$$$$$$uuu
+  u$$$uuu$$$$$$$$$uu ""$$$$$$$$$$$uuu$$$
+  $$$$$$$$$$""""           ""$$$$$$$$$$$"
+   "$$$$$"                      ""$$$$""
+     $$$"                         $$$$"
     ''')
 
 #EnableIA = input('Bem vindo ao HoodWink, Gostaria de jogar com a IA? Sim (1) ou não (0)?')
@@ -1854,8 +1872,9 @@ def EnemyTurn():
     os.system('cls')
     input(f'Turno do adversário, ele possuí {IAplayer.SilverSerpents} Serpentes de prata, e {cards_in_hand_iaplayer}')
     
-    iaChoice = int(input("ação da Ia: "))#FOR DEBUG
-    #iaChoice = random.randint(0,11)
+    iaChoice = int(input("ação da Ia: ")) #FOR DEBUG
+    IAplayer.pick_possible_choices()
+    #iaChoice = random.choice(IAplayer.possible_choices)
     
 
 
