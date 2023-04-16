@@ -166,7 +166,7 @@ def IaUsesKamikaze():
         if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
         elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
         else: lostCard = random.choice(player1.CardsInHand)
-        input(f'Você perdeu a carta {id_card[lostCard]}')
+        input(f'Você perdeu a carta {id_card[lostCard][0]}')
         player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
         if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
             loseGame()
@@ -245,13 +245,13 @@ os.system('cls')
 ####################
 
 def player1_round():
-    os.system('cls')
     demand_debt()
-    os.system('cls')
     translated_ids = [id_card[card] for card in player1.CardsInHand]
     if translated_ids[0][0] != '' and translated_ids[1][0] != '': TranslatedHand = f'{translated_ids[0][0]} e {translated_ids[1][0]}'
     elif translated_ids[0][0] == '': TranslatedHand = translated_ids[1][0]
     else: TranslatedHand = translated_ids[0][0]
+    os.system('cls')
+
     print(f'''Este é o turno {num_Turn[-1]}. Você tem em mãos: {TranslatedHand}. E Você tem {player1.SilverSerpents} Serpente(s) de Prata
 Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1)} carta(s).
 
@@ -388,7 +388,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer
                             if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
                             elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
                             else: lostCard = random.choice(player1.CardsInHand)
-                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard]}')         
+                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard][0]}')         
                             player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
                             if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
                                 loseGame()
@@ -464,7 +464,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer
                             if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
                             elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
                             else: lostCard = random.choice(player1.CardsInHand)
-                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard]}')
+                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard][0]}')
                             player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
                             if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
                                 loseGame()
@@ -543,7 +543,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer
                             if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
                             elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
                             else: lostCard = random.choice(player1.CardsInHand)
-                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard]}')
+                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard][0]}')
                             player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
                             if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
                                 loseGame()
@@ -674,7 +674,7 @@ Seu Adversário tem {IAplayer.SilverSerpents} serpentes de prata e {len(IAplayer
                             if player1.CardsInHand[1] == -1: lostCard = player1.CardsInHand[0]
                             elif player1.CardsInHand[0] == -1: lostCard = player1.CardsInHand[1] 
                             else: lostCard = random.choice(player1.CardsInHand)
-                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard]}')
+                            input(f'O adversário tinha a paladina, você perdeu a sua carta: {id_card[lostCard][0]}')
                             player1.CardsInHand[player1.CardsInHand.index(lostCard)] = -1
                             if player1.CardsInHand[0] == -1 and player1.CardsInHand[1] == -1:
                                 loseGame()
