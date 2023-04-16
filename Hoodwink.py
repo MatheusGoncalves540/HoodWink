@@ -26,6 +26,7 @@ id_card = { # ID da carta : ['Nome da carta', Preço, ação extra 1, ação ext
     9 : ['Rebelde', 3, 1],
 }
 
+Debuging = True
 Total_Cards = len(id_card) -  2
 silver_initial = 8
 probability = [0,0,0,0,1]
@@ -207,30 +208,24 @@ def loseGame():
 ██╔══╝░░  ██║╚████║██║░░██║  ██║░░██╗██╔══██║██╔══██║░░░██║░░░
 ██║░░░░░  ██║░╚███║╚█████╔╝  ╚█████╔╝██║░░██║██║░░██║░░░██║░░░
 ╚═╝░░░    ╚═╝░░╚══╝░╚════╝░  ░╚════╝░╚═╝░░╚═╝╚═╝░░╚═╝░░░╚═╝░░░
-                 uuuuuuu
+
              uu$$$$$$$$$$$uu
           uu$$$$$$$$$$$$$$$$$uu
-         u$$$$$$$$$$$$$$$$$$$$$u
         u$$$$$$$$$$$$$$$$$$$$$$$u
        u$$$$$$$$$$$$$$$$$$$$$$$$$u
-       u$$$$$$$$$$$$$$$$$$$$$$$$$u
        u$$$$$$"   "$$$"   "$$$$$$u
-       "$$$$"      u$u       $$$$"
         $$$u       u$u       u$$$
         $$$u      u$$$u      u$$$
          "$$$$uu$$$   $$$uu$$$$"
-          "$$$$$$$"   "$$$$$$$"
             u$$$$$$$u$$$$$$$u
              u$"$"$"$"$"$"$u
   uuu        $$u$ $ $ $ $u$$       uuu
  u$$$$        $$$$$u$u$u$$$       u$$$$
-  $$$$$uu      "$$$$$$$$$"     uu$$$$$$
 u$$$$$$$$$$$uu    """""    uuuu$$$$$$$$$$
 $$$$"""$$$$$$$$$$uuu   uu$$$$$$$$$"""$$$"
  """      ""$$$$$$$$$$$uu ""$"""
            uuuu ""$$$$$$$$$$uuu
   u$$$uuu$$$$$$$$$uu ""$$$$$$$$$$$uuu$$$
-  $$$$$$$$$$""""           ""$$$$$$$$$$$"
    "$$$$$"                      ""$$$$""
      $$$"                         $$$$"
     ''')
@@ -1864,6 +1859,7 @@ def EnemyTurn():
     Ia_use_this.clear()
     num_Turn.append(num_Turn[-1]+1)
     player1.duke_been_paid = False
+    iaChoice = 0
 
     if len(IAplayer.CardsInHand) - IAplayer.CardsInHand.count(-1) > 1: cards_in_hand_iaplayer = 'tem as 2 cartas em mãos'
     elif IAplayer.CardsInHand[0] == -1: cards_in_hand_iaplayer = 'tem apenas a carta da direita'
@@ -1872,8 +1868,16 @@ def EnemyTurn():
     os.system('cls')
     input(f'Turno do adversário, ele possuí {IAplayer.SilverSerpents} Serpentes de prata, e {cards_in_hand_iaplayer}')
     
-    iaChoice = int(input("ação da Ia: ")) #FOR DEBUG
     IAplayer.pick_possible_choices()
+    print(IAplayer.possible_choices)
+
+    #FOR DEBUG----------
+    if Debuging == True:
+        while iaChoice not in range(1,12):
+            try: iaChoice = int(input("ação da Ia: "))
+            except: ... 
+    #FOR DEBUG----------
+    
     #iaChoice = random.choice(IAplayer.possible_choices)
     
 
