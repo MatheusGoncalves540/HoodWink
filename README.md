@@ -43,6 +43,7 @@ O Kamikaze não é afetado por isso.
 
 PALADINA: Por 5 serpentes de prata, impeça um ataque contra uma de suas cartas.
 Usada apenas fora de seu turno.
+Não pode bloquear kamikazes e nem mortes de carta por contestamento.
 
 CONDESSA: Impeça o adversário de comprar ou roubar 2 ou mais serpentes de prata.
 Usada apenas fora de seu turno.
